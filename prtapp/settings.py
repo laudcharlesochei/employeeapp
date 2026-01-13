@@ -67,9 +67,21 @@ db_url = (
     or default_sqlite
 )
 
+#DATABASES = {
+#    "default": dj_database_url.parse(db_url, conn_max_age=600, ssl_require=False)
+#}
+
+
+
 DATABASES = {
-    "default": dj_database_url.parse(db_url, conn_max_age=600, ssl_require=False)
+    "default": dj_database_url.config(
+        default=os.getenv("JAWSDB_URL") or os.getenv("DATABASE_URL")
+    )
 }
+
+
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
