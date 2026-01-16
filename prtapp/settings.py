@@ -168,6 +168,7 @@ else:
 
 
 # JAWSDB MySQL configuration
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -184,6 +185,61 @@ DATABASES = {
         'CONN_MAX_AGE': 600,
     }
 }
+
+'''
+
+
+
+
+# settings.py
+#import os
+#from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Detect environment
+ON_HEROKU = 'DYNO' in os.environ
+ON_RAILWAY = 'RAILWAY_STATIC_URL' in os.environ
+ON_RENDER = 'RENDER' in os.environ
+
+if ON_HEROKU:
+    # Production - JAWSDB MySQL on Heroku
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'y0685wvb32e5idjq',
+            'USER': 'oqoyvdtvun34omkl',
+            'PASSWORD': 'hiro3jt1gppdmtfp',
+            'HOST': 'fojvtycq53b2f2kx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+            'PORT': '3306',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+                'ssl': {'ssl': {}}  # SSL for RDS
+            },
+            'CONN_MAX_AGE': 600,
+        }
+    }
+else:
+    # Development - Local MySQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'employee',      # Your local database
+            'USER': 'root',          # Your local MySQL username
+            'PASSWORD': 'welcome',   # Your local MySQL password
+            'HOST': 'localhost',     # Local MySQL server
+            'PORT': '3306',          # Default MySQL port
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            },
+            'CONN_MAX_AGE': 600,
+        }
+    }
+
+
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
