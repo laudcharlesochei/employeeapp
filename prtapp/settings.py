@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-me")
 
-DEBUG = os.getenv("DEBUG", "1") == "1"
+DEBUG = os.getenv("DEBUG", "0") == "1"
 
 # Heroku sets DYNO; allow all by default for simplicity
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
@@ -60,12 +60,16 @@ WSGI_APPLICATION = "prtapp.wsgi.application"
 # Database:
 # - Default: SQLite (local dev)
 # - Heroku MySQL: set DATABASE_URL or CLEARDB_DATABASE_URL
+
+'''
 default_sqlite = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
 db_url = (
     os.getenv("DATABASE_URL")
     or os.getenv("CLEARDB_DATABASE_URL")
     or default_sqlite
 )
+'''
+
 
 #DATABASES = {
 #    "default": dj_database_url.parse(db_url, conn_max_age=600, ssl_require=False)
@@ -73,11 +77,40 @@ db_url = (
 
 
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("JAWSDB_URL") or os.getenv("DATABASE_URL")
-    )
-}
+# DATABASES = {
+#    "default": dj_database_url.config(
+#        default=os.getenv("JAWSDB_URL") or os.getenv("DATABASE_URL")
+#    )
+#}
+
+
+
+
+# Database configuration
+if os.environ.get('DATABASE_URL'):
+    # Production (Heroku with JAWSDB)
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    # Development (local)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'employee',
+            'USER': 'root',
+            'PASSWORD': 'welcome',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+
+
+
+
 
 
 
