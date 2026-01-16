@@ -143,6 +143,8 @@ else:
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# - this is correct
+'''
 if DEBUG:
     DATABASES = {
         'default': {
@@ -159,10 +161,29 @@ else:
         )
     }
 
+'''
 
 
 
 
+
+# JAWSDB MySQL configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'y0685wvb32e5idjq',
+        'USER': 'oqoyvdtvun34omkl',
+        'PASSWORD': 'hiro3jt1gppdmtfp',
+        'HOST': 'fojvtycq53b2f2kx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            'ssl': {'ssl': {}}  # Enable SSL for RDS
+        },
+        'CONN_MAX_AGE': 600,
+    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
