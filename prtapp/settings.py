@@ -14,7 +14,32 @@ SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-me")
 DEBUG = os.getenv("DEBUG", "0") == "1"
 
 # Heroku sets DYNO; allow all by default for simplicity
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+#ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+'''
+ALLOWED_HOSTS = [
+    'examsprepmanager-14af8f0ac077.herokuapp.com',
+    '127.0.0.1',
+    'localhost',
+]
+'''
+
+
+
+
+
+ALLOWED_HOSTS = []
+
+# Allow Heroku domains in production
+if 'DYNO' in os.environ:
+    ALLOWED_HOSTS.append('.herokuapp.com')
+
+# Always allow localhost
+ALLOWED_HOSTS.extend(['localhost', '127.0.0.1', '[::1]'])
+
+
+
+
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -109,7 +134,7 @@ else:
             'PORT': '3306',
         }
     }
-    
+
 '''
 
 
