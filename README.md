@@ -1,6 +1,6 @@
 # PRT Employee Management System (Django)
 
-This is a Django conversion of the provided Spring Boot + Thymeleaf CRUD app.
+This is a Django application.
 
 ## 1) Run locally (SQLite)
 
